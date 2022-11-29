@@ -1,0 +1,13 @@
+
+.contenedor{
+	background-color: aqua;
+}
+
+.centrar{
+	text-align: center;
+}
+
+.bloque{
+	text-align: center;
+	padding: 100px;
+}
