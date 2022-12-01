@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,6 +25,9 @@ SECRET_KEY = 'django-insecure-&vznf9d1ub9b7!@ecs)&s+em1z%hwn9+nkqqvsge$+j%q$xf@k
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGOUT_REDIRECT_URL = reverse_lazy('home')
+LOGIN_URL = reverse_lazy('login')
 # Application definition
 
 INSTALLED_APPS = [
@@ -71,7 +74,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
+'''
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -86,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+'''
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
