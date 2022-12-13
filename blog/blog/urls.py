@@ -19,6 +19,9 @@ from . import views
 #URL LOGIN
 from django.contrib.auth import views as auth
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
 
     path('admin/', admin.site.urls),
@@ -36,4 +39,5 @@ urlpatterns = [
     # URL DE APLICACION
     path('Noticias/', include('apps.noticias.urls')),
     path('Usuario/',include('apps.usuarios.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
