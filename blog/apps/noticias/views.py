@@ -2,19 +2,23 @@ from django.shortcuts import render
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Noticia
+from .models import Noticia, Categoria
 
 @login_required
 def Listar_Noticias(request):
 	contexto = {}
-	n = Noticia.objects.all() #RETORNA UNA LISTA DE OBJETOS
+
+	id_categoria = request.GET.get('id',None)
+
+	if id_categoria:
+		n = Noticia.objects.filter(categoria_noticia = id_categoria)
+	else:
+		n = Noticia.objects.all() #RETORNA UNA LISTA DE OBJETOS
+
 	contexto['noticias'] = n
 
-	#x = Noticia.objects.get(pk = 1)
-	#print(f"1 SOLA: {x}")
-	
-	#f = Noticia.objects.filter(categoria_noticia = 1)
-	#print(f"SOLO DEPORTES: {f}")
+	cat = Categoria.objects.all().order_by('nombre')
+	contexto['categorias'] = cat
 
 	return render(request, 'noticias/listar.html', contexto)
 
