@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Noticia, Categoria
+from .models import Noticia, Categoria, Comentario
+
+from django.urls import reverse_lazy
 
 @login_required
 def Listar_Noticias(request):
@@ -29,7 +31,22 @@ def Detalle_Noticias(request, pk):
 	n = Noticia.objects.get(pk = pk) #RETORNA SOLO UN OBEJTO
 	contexto['noticia'] = n
 
+	c = Comentario.objects.filter(noticia = n)
+	contexto['comentarios'] = c
+
 	return render(request, 'noticias/detalle.html',contexto)
+
+
+@login_required
+def Comentar_Noticia(request):
+
+	com = request.POST.get('comentario',None)
+	usu = request.user
+	noti = request.POST.get('id_noticia', None)# OBTENGO LA PK
+	noticia = Noticia.objects.get(pk = noti) #BUSCO LA NOTICIA CON ESA PK
+	coment = Comentario.objects.create(usuario = usu, noticia = noticia, texto = com)
+
+	return redirect(reverse_lazy('noticias:detalle', kwargs={'pk': noti}))
 
 #{'nombre':'nicolas', 'apellido':'Tortosa', 'edad':33}
 #EN EL TEMPLATE SE RECIBE UNA VARIABLE SEPARADA POR CADA CLAVE VALOR
